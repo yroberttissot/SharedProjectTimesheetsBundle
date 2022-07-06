@@ -34,6 +34,8 @@ final class Version2020120600000 extends AbstractMigration
             $table->addColumn('password', Types::STRING, ['length' => 255, 'default' => null, 'notnull' => false]);
             $table->addColumn('entry_user_visible', Types::BOOLEAN, ['default' => false, 'notnull' => true]);
             $table->addColumn('entry_rate_visible', Types::BOOLEAN, ['default' => false, 'notnull' => true]);
+            $table->addColumn('entry_budget_visible', Types::BOOLEAN, ['default' => false, 'notnull' => true]);
+            $table->addColumn('entry_activity_visible', Types::BOOLEAN, ['default' => false, 'notnull' => true]);
 
             $table->setPrimaryKey(['id']);
             $table->addIndex(['share_key']);

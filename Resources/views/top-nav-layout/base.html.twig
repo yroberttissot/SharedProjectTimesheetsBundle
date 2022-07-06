@@ -86,6 +86,7 @@
     {{ encore_entry_link_tags('app') }}
     {% set event = trigger(constant('App\\Event\\ThemeEvent::STYLESHEET')) %}
     {{ event.content|raw }}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css">
 {% endblock %}
 
 {% block head %}
@@ -98,6 +99,7 @@
 
 {% block javascripts %}
     {# no call to parent(), as we use a custom built for the frontend assets and don't want the default <script> #}
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         window.addEventListener('load', function() {
             var loader = new KimaiWebLoader(
@@ -135,6 +137,56 @@
                 }
             );
             window.kimai = loader.getKimai();
+        });
+        var user_select
+        $(document).ready(function () {
+            // Setup - add a text input to each footer cell
+            if($("#stats-table").length > 0) {
+
+                $('#stats-table thead tr:eq(1) th').each( function () {
+                    var title = $(this).text();
+                    if(title == "User"){
+                        user_select = this
+                        $(this).html('<select class="column_search user_select form-control"><option value=""></option></select>')
+                    }
+                    else{
+                        $(this).html( '<input type="text" placeholder="Search '+title+'" class="column_search form-control" />' );
+                    }
+                } );
+            
+                // DataTable
+                var table = $('#stats-table').DataTable({
+                    orderCellsTop: true,
+                    initComplete: function () {
+                        this.api()
+                            .columns()
+                            .every(function () {
+                                var column = this;
+                                if(column.header().innerHTML == "User"){
+                                    column
+                                    .data()
+                                    .unique()
+                                    .sort()
+                                    .each(function (d, j) {
+                                        $('.user_select').append('<option value="' + d + '">' + d + '</option>');
+                                    });
+                                }
+
+                            });
+                    },
+                });
+            
+            
+            
+                $( '#stats-table thead'  ).on( 'keyup change', ".column_search",function () {
+            
+                    table
+                        .column( $(this).parent().index() )
+                        .search( this.value )
+                        .draw();
+                } );
+            }
+            
         });
     </script>
     {% set event = trigger(constant('App\\Event\\ThemeEvent::JAVASCRIPT')) %}

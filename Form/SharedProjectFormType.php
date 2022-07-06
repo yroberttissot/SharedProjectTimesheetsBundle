@@ -74,6 +74,14 @@ class SharedProjectFormType extends AbstractType
                         'label' => 'shared_project_timesheets.manage.form.annual_chart_visible',
                         'required' => false,
                     ])
+                    ->add('projectBudgetVisible', CheckboxType::class, [
+                        'label' => 'shared_project_timesheets.manage.form.project_budget_visible',
+                        'required' => false,
+                    ])
+                    ->add('activityVisible', CheckboxType::class, [
+                        'label' => 'shared_project_timesheets.manage.form.activity_visible',
+                        'required' => false,
+                    ])
                     ->add('monthlyChartVisible', CheckboxType::class, [
                         'label' => 'shared_project_timesheets.manage.form.monthly_chart_visible',
                         'required' => false,

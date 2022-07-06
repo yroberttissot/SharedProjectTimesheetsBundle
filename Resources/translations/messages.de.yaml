@@ -22,6 +22,8 @@ shared_project_timesheets:
             entry_rate_visible: Kosten sichtbar
             chart_options: Diagramme - Optionen
             annual_chart_visible: Jahresdiagramm sichtbar
+            project_budget_visible: Projektbudget sichtbar
+            activity_visible: Aktivität sichtbar
             monthly_chart_visible: Monatsdiagramm sichtbar
         table:
             name: Name des Projekts
@@ -30,6 +32,8 @@ shared_project_timesheets:
             record_merge_mode: Zeiten zusammenführen
             entry_user_visible: Benutzer sichtbar
             entry_rate_visible: Kosten sichtbar
+            project_budget_visible: Projektbudget sichtbar
+            activity_visible: Aktivität sichtbar
             annual_chart_visible: Jahresdiagramm sichtbar
             monthly_chart_visible: Monatsdiagramm sichtbar
         persist:
@@ -40,6 +44,10 @@ shared_project_timesheets:
         title: "Projekt:"
         subtitle: "- geteilte Projektzeiten"
         selection_title: Monat auswählen
+        project_budget: Projektbudget
+        project_total_budget: Gesamtbudget
+        project_used_budget: Verwendetes Budget
+        project_open_budget: Offenes Budget
         month:
             1: Januar
             2: Februar
@@ -60,6 +68,7 @@ shared_project_timesheets:
             duration: Dauer
             empty: Keine Einträge verfügbar für diesen Monat
             user: Benutzer
+            activity: Aktivität
             rate_hour: Stundenlohn
             rate_total: Lohn gesamt
         auth:

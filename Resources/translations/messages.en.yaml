@@ -22,6 +22,8 @@ shared_project_timesheets:
             entry_rate_visible: Entry rate visible
             chart_options: Chart options
             annual_chart_visible: Annual chart visible
+            project_budget_visible: Project budget visible
+            activity_visible: Activity visible
             monthly_chart_visible: Monthly chart visible
         table:
             name: Project name
@@ -30,6 +32,8 @@ shared_project_timesheets:
             record_merge_mode: Merge records
             entry_user_visible: Entry user visible
             entry_rate_visible: Entry rate visible
+            project_budget_visible: Project budget visible
+            activity_visible: Activity visible
             annual_chart_visible: Annual chart visible
             monthly_chart_visible: Monthly chart visible
         persist:
@@ -40,6 +44,10 @@ shared_project_timesheets:
         title: "Project:"
         subtitle: "- shared project timesheets"
         selection_title: Month selection
+        project_budget: Project budget
+        project_total_budget: Total budget
+        project_used_budget: Used budget
+        project_open_budget: Open budget
         month:
             1: January
             2: February
@@ -60,6 +68,7 @@ shared_project_timesheets:
             duration: Duration
             empty: No entries available for this month
             user: User
+            activity: Activity
             rate_hour: Hour rate
             rate_total: Total rate
         auth:

@@ -92,6 +92,20 @@ class SharedProjectTimesheet
     /**
      * @var boolean
      *
+     * @ORM\Column(name="entry_budget_visible", type="boolean", nullable=false)
+     */
+    protected $projectBudgetVisible = false;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="entry_activity_visible", type="boolean", nullable=false)
+     */
+    protected $activityVisible = false;
+
+    /**
+     * @var boolean
+     *
      * @ORM\Column(name="monthly_chart_visible", type="boolean", nullable=false)
      */
     protected $monthlyChartVisible = false;
@@ -224,6 +238,44 @@ class SharedProjectTimesheet
     public function setAnnualChartVisible(bool $annualChartVisible): SharedProjectTimesheet
     {
         $this->annualChartVisible = $annualChartVisible;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isProjectBudgetVisible(): bool
+    {
+        return $this->projectBudgetVisible;
+    }
+
+    /**
+     * @param bool $projectBudgetVisible
+     * @return SharedProjectTimesheet
+     */
+    public function setProjectBudgetVisible(bool $projectBudgetVisible): SharedProjectTimesheet
+    {
+        $this->projectBudgetVisible = $projectBudgetVisible;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActivityVisible(): bool
+    {
+        return $this->activityVisible;
+    }
+
+    /**
+     * @param bool $activityVisible
+     * @return SharedProjectTimesheet
+     */
+    public function setActivityVisible(bool $activityVisible): SharedProjectTimesheet
+    {
+        $this->activityVisible = $activityVisible;
 
         return $this;
     }

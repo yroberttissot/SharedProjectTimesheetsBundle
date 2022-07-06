@@ -20,7 +20,7 @@ A Kimai 2 plugin that allows you to share your project timesheets with anyone yo
 First clone this plugin to your Kimai installation `plugins` directory:
 ```
 cd /kimai/var/plugins/
-git clone https://github.com/dexterity42/SharedProjectTimesheetsBundle.git
+git clone https://github.com/zain-dixeam26/SharedProjectTimesheetsBundle.git
 ```
 
 Go back to the root of your Kimai installation and clear the cache:

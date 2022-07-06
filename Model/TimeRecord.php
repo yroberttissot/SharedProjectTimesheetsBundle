@@ -12,6 +12,7 @@ namespace KimaiPlugin\SharedProjectTimesheetsBundle\Model;
 
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Entity\Activity;
 use DateTime;
 
 /**
@@ -45,6 +46,11 @@ class TimeRecord
      * @var DateTime
      */
     private $date;
+
+    /**
+     * @var Activity
+     */
+    private $activity;
 
     /**
      * @var string
@@ -95,6 +101,14 @@ class TimeRecord
     public function getDate(): DateTime
     {
         return $this->date;
+    }
+
+    /**
+     * @return Activity
+     */
+    public function getActivity(): Activity
+    {
+        return $this->activity;
     }
 
     /**
@@ -149,6 +163,7 @@ class TimeRecord
         $this->addHourlyRate($timesheet->getHourlyRate(), $timesheet->getDuration())
             ->addRate($timesheet->getRate())
             ->addDuration($timesheet->getDuration())
+            ->addActivity($timesheet->getActivity())
             ->setDescription($timesheet);
 
         return $this;
@@ -191,6 +206,15 @@ class TimeRecord
     {
         if ( $duration !== null ) {
             $this->duration += $duration;
+        }
+
+        return $this;
+    }
+
+    private function addActivity(Activity $activity)
+    {
+        if ( $activity !== null ) {
+            $this->activity = $activity;
         }
 
         return $this;

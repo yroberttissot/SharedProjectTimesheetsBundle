@@ -10,6 +10,8 @@
     'record_merge_mode': {'class': 'hidden-xs hidden-sm text-center'},
     'entry_user_visible': {'class': 'hidden-xs hidden-sm text-center'},
     'entry_rate_visible': {'class': 'hidden-xs hidden-sm text-center'},
+    'project_budget_visible': {'class': 'hidden-xs hidden-sm text-center'},
+    'activity_visible': {'class': 'hidden-xs hidden-sm text-center'},
     'annual_chart_visible': {'class': 'hidden-xs hidden-sm text-center'},
     'monthly_chart_visible': {'class': 'hidden-xs hidden-sm text-center'},
     'actions': {'class': 'hidden-xs hidden-sm'},
@@ -71,6 +73,12 @@
             </td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'entry_rate_visible') }}">
                 <i class="{{ sharedProject.entryRateVisible ? "fa fa-check-circle" : "far fa-circle" }}"></i>
+            </td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'project_budget_visible') }}">
+                <i class="{{ sharedProject.projectBudgetVisible ? "fa fa-check-circle" : "far fa-circle" }}"></i>
+            </td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'activity_visible') }}">
+                <i class="{{ sharedProject.activityVisible ? "fa fa-check-circle" : "far fa-circle" }}"></i>
             </td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'annual_chart_visible') }}">
                 <i class="{{ sharedProject.annualChartVisible ? "fa fa-check-circle" : "far fa-circle" }}"></i>

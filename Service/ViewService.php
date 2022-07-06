@@ -95,13 +95,19 @@ class ViewService
      *
      * @todo Unit test
      */
-    public function getTimeRecords(SharedProjectTimesheet $sharedProject, int $year, int $month): array
+    public function getTimeRecords(SharedProjectTimesheet $sharedProject, int $year, int $month=-1): array
     {
+        if($month == -1){
+            $interval = 'P12M';
+        }
+        else{
+            $interval = 'P1M';
+        }
         $month = max(min($month, 12), 1);
 
         $begin = new DateTime($year . '-' . $month . '-01 00:00:00');
         $end = clone $begin;
-        $end->add(new DateInterval('P1M'));
+        $end->add(new DateInterval($interval));
 
         $query = new TimesheetQuery();
         $query->setBegin($begin);
@@ -111,7 +117,7 @@ class ViewService
         $query->setOrder(BaseQuery::ORDER_ASC);
 
         $timesheets = $this->timesheetRepository->getTimesheetsForQuery($query);
-
+        
         // Filter time records by merge mode
         $timeRecords = [];
         $mergeMode = $sharedProject->getRecordMergeMode();
@@ -122,6 +128,7 @@ class ViewService
             }
 
             $userKey = preg_replace("/[^a-z0-9]/", "", strtolower($timesheet->getUser()->getDisplayName()));
+            
             if ($mergeMode !== RecordMergeMode::MODE_NONE) {
                 // Assume that records from one user will be merged into one
                 if (!array_key_exists($userKey, $timeRecords[$dateKey])) {
@@ -149,7 +156,7 @@ class ViewService
                 }
             }
         }
-
+        
         return $flattenedTimeRecords;
     }
 
@@ -205,7 +212,7 @@ class ViewService
      *
      * @todo Unit test
      */
-    public function getMonthlyStats(SharedProjectTimesheet $sharedProject, int $year, int $month): array
+    public function getMonthlyStats(SharedProjectTimesheet $sharedProject, int $year, int $month=-1): array
     {
         $result = $this->timesheetRepository->createQueryBuilder('t')
             ->select([
@@ -216,9 +223,10 @@ class ViewService
                 'SUM(t.rate) as rate',
             ])
             ->where('t.project = :project')
-            ->andWhere('YEAR(t.begin) = :year')
-            ->andWhere('MONTH(t.begin) = :month')
-            ->groupBy('year')
+            ->andWhere('YEAR(t.begin) = :year');
+        if(@$month != -1)
+            $result = $result->andWhere('MONTH(t.begin) = :month');
+        $result = $result->groupBy('year')
             ->addGroupBy('month')
             ->addGroupBy('day')
             ->setParameters([

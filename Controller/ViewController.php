@@ -57,6 +57,7 @@ class ViewController extends AbstractController
         $givenPassword = $request->get('spt-password');
         $year = (int)$request->get('year', date('Y'));
         $month = (int)$request->get('month', date('m'));
+        $disable_month = (int)$request->get('disable_month','0');
         $detailsMode = $request->get('details', 'table');
 
         // Get project.
@@ -64,6 +65,7 @@ class ViewController extends AbstractController
             $projectId,
             $shareKey
         );
+        
 
         if ($sharedProject === null) {
             throw new NotFoundHttpException("Project not found.");
@@ -86,9 +88,15 @@ class ViewController extends AbstractController
                 ]
             );
         }
+        if($disable_month>0){
+            $timeRecords = $this->viewService->getTimeRecords($sharedProject, $year);
+        }
+        else{
+            $timeRecords = $this->viewService->getTimeRecords($sharedProject, $year, $month);
+        }
 
         // Get time records.
-        $timeRecords = $this->viewService->getTimeRecords($sharedProject, $year, $month);
+        
 
         // Calculate summary.
         $rateSum = 0;
@@ -112,16 +120,21 @@ class ViewController extends AbstractController
         $statsPerMonth = $annualChartVisible ? $this->viewService->getAnnualStats($sharedProject, $year) : null;
         $statsPerDay = ($monthlyChartVisible && $detailsMode === 'chart')
             ? $this->viewService->getMonthlyStats($sharedProject, $year, $month) : null;
-
+        // dump($sharedProject->getProject());
+        // exit;
+        $project = $sharedProject->getProject();
         return $this->render(
             '@SharedProjectTimesheets/view/timesheet.html.twig',
             [
                 'sharedProject' => $sharedProject,
+                'project' => $project,
                 'timeRecords' => $timeRecords,
                 'rateSum' => $rateSum,
+                'openBudget' => $project->getBudget() - $rateSum,
                 'durationSum' => $durationSum,
                 'year' => $year,
                 'month' => $month,
+                'disable_month' => $disable_month,
                 'currency' => $currency,
                 'statsPerMonth' => $statsPerMonth,
                 'monthlyChartVisible' => $monthlyChartVisible,
