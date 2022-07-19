@@ -139,6 +139,7 @@
             window.kimai = loader.getKimai();
         });
         var user_select
+        var activity_select
         $(document).ready(function () {
             // Setup - add a text input to each footer cell
             if($("#stats-table").length > 0) {
@@ -149,10 +150,13 @@
                         user_select = this
                         $(this).html('<select class="column_search user_select form-control"><option value=""></option></select>')
                     }
-                    else{
+                    else if(title == "Activity"){
+                        activity_select = this
+                        $(this).html('<select class="column_search activity_select form-control"><option value=""></option></select>')
+                    } else {
                         $(this).html( '<input type="text" placeholder="Search '+title+'" class="column_search form-control" />' );
                     }
-                } );
+                });
             
                 // DataTable
                 var table = $('#stats-table').DataTable({
@@ -169,6 +173,16 @@
                                     .sort()
                                     .each(function (d, j) {
                                         $('.user_select').append('<option value="' + d + '">' + d + '</option>');
+                                    });
+                                }
+
+                                if(column.header().innerHTML == "Activity"){
+                                    column
+                                    .data()
+                                    .unique()
+                                    .sort()
+                                    .each(function (d, j) {
+                                        $('.activity_select').append('<option value="' + d + '">' + d + '</option>');
                                     });
                                 }
 

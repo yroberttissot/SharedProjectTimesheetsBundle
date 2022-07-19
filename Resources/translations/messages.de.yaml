@@ -25,6 +25,7 @@ shared_project_timesheets:
             project_budget_visible: Projektbudget sichtbar
             activity_visible: Aktivität sichtbar
             monthly_chart_visible: Monatsdiagramm sichtbar
+            project_time_budget_visible: Project Time Budget Visible
         table:
             name: Name des Projekts
             url: Link
@@ -36,6 +37,7 @@ shared_project_timesheets:
             activity_visible: Aktivität sichtbar
             annual_chart_visible: Jahresdiagramm sichtbar
             monthly_chart_visible: Monatsdiagramm sichtbar
+            project_time_budget_visible: Project Time Budget Visible
         persist:
             success: Erfolgreich gespeichert.
             error: Speichern fehlgeschlagen. Bitte versuchen Sie es erneut.
@@ -45,6 +47,7 @@ shared_project_timesheets:
         subtitle: "- geteilte Projektzeiten"
         selection_title: Monat auswählen
         project_budget: Projektbudget
+        time_budget: Time budget
         project_total_budget: Gesamtbudget
         project_used_budget: Verwendetes Budget
         project_open_budget: Offenes Budget

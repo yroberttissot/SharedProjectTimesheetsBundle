@@ -90,13 +90,18 @@ class ViewController extends AbstractController
         }
         if($disable_month>0){
             $timeRecords = $this->viewService->getTimeRecords($sharedProject, $year);
+            if ($sharedProject->getProject()->getBudgetType() == "month") {
+                $totalTimeBudget = $sharedProject->getProject()->getTimeBudget() * 12;
+            } else {
+                $totalTimeBudget = $sharedProject->getProject()->getTimeBudget();
+            }
         }
         else{
             $timeRecords = $this->viewService->getTimeRecords($sharedProject, $year, $month);
+            $totalTimeBudget = $sharedProject->getProject()->getTimeBudget();
         }
 
         // Get time records.
-        
 
         // Calculate summary.
         $rateSum = 0;
@@ -113,6 +118,14 @@ class ViewController extends AbstractController
             $currency = $customer->getCurrency();
         }
 
+        if($sharedProject->getProject()->getBudgetType() == "month"){
+            $timeDurationSum = $durationSum;
+        } else {
+            $timeDurationSum = 0;
+            $getTimeRecords = $this->viewService->getOverallStats($sharedProject);
+            $timeDurationSum += $getTimeRecords[0]->getDuration();
+        }
+
         // Prepare stats for charts.
         $annualChartVisible = $sharedProject->isAnnualChartVisible();
         $monthlyChartVisible = $sharedProject->isMonthlyChartVisible();
@@ -120,7 +133,7 @@ class ViewController extends AbstractController
         $statsPerMonth = $annualChartVisible ? $this->viewService->getAnnualStats($sharedProject, $year) : null;
         $statsPerDay = ($monthlyChartVisible && $detailsMode === 'chart')
             ? $this->viewService->getMonthlyStats($sharedProject, $year, $month) : null;
-        // dump($sharedProject->getProject());
+        // dump($totalTimeBudget < str_replace("-", "", $totalTimeBudget - $timeDurationSum));
         // exit;
         $project = $sharedProject->getProject();
         return $this->render(
@@ -131,6 +144,9 @@ class ViewController extends AbstractController
                 'timeRecords' => $timeRecords,
                 'rateSum' => $rateSum,
                 'openBudget' => $project->getBudget() - $rateSum,
+                'totalTimeBudget' => $totalTimeBudget,
+                'timeDurationSum' => $timeDurationSum,
+                'openTimeBudget' => str_replace("-", "", $totalTimeBudget - $timeDurationSum),
                 'durationSum' => $durationSum,
                 'year' => $year,
                 'month' => $month,

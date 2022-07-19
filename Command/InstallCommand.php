@@ -17,6 +17,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+
 class InstallCommand extends Command
 {
     public static $defaultName = 'kimai:bundle:' . self::BUNDLE_IDENTIFIER . ':install';
@@ -72,6 +73,8 @@ class InstallCommand extends Command
 
         // prevent windows from breaking
         $config = str_replace('/', DIRECTORY_SEPARATOR, $config);
+
+
 
         $command = $this->getApplication()->find('doctrine:migrations:migrate');
         $cmdInput = new ArrayInput(['--allow-no-migration' => true, '--configuration' => $config]);

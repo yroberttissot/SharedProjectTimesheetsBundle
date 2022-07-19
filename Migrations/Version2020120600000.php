@@ -14,6 +14,7 @@ namespace KimaiPlugin\SharedProjectTimesheetsBundle\Migrations;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\Migrations\AbstractMigration;
+use KimaiPlugin\SharedProjectTimesheetsBundle\Model\RecordMergeMode;
 
 final class Version2020120600000 extends AbstractMigration
 {
@@ -35,7 +36,13 @@ final class Version2020120600000 extends AbstractMigration
             $table->addColumn('entry_user_visible', Types::BOOLEAN, ['default' => false, 'notnull' => true]);
             $table->addColumn('entry_rate_visible', Types::BOOLEAN, ['default' => false, 'notnull' => true]);
             $table->addColumn('entry_budget_visible', Types::BOOLEAN, ['default' => false, 'notnull' => true]);
+
+            $table->addColumn('entry_time_budget_visible', Types::BOOLEAN, ['default' => false, 'notnull' => true]);
+
             $table->addColumn('entry_activity_visible', Types::BOOLEAN, ['default' => false, 'notnull' => true]);
+
+            $table->addColumn('annual_chart_visible', Types::BOOLEAN, ['default' => false, 'notnull' => true]);
+            $table->addColumn('monthly_chart_visible', Types::BOOLEAN, ['default' => false, 'notnull' => true]);
 
             $table->setPrimaryKey(['id']);
             $table->addIndex(['share_key']);
@@ -48,6 +55,11 @@ final class Version2020120600000 extends AbstractMigration
                     'onUpdate' => 'CASCADE',
                     'onDelete' => 'CASCADE',
                 ]
+            );
+            $table->addColumn(
+                'record_merge_mode',
+                Types::STRING,
+                ['length' => 50, 'notnull' => true, 'default' => RecordMergeMode::MODE_NONE]
             );
         }
     }

@@ -66,18 +66,36 @@
                     </form>
                 </div>
             </div>
+            <div class="row">
             {% if sharedProject.projectBudgetVisible %}
-                <div class="box box-default">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">{{ 'shared_project_timesheets.view.project_budget' | trans }}</h3>
-                    </div>
-                    <div class="box-body">
-                        <b>{{ 'shared_project_timesheets.view.project_total_budget' | trans }}</b>: {{ project.budget | format_currency(currency) }}<br>
-                        <b>{{ 'shared_project_timesheets.view.project_used_budget' | trans }}</b>: {{ rateSum | format_currency(currency) }}<br>
-                        <b>{{ 'shared_project_timesheets.view.project_open_budget' | trans }}</b>: {{ openBudget | format_currency(currency) }}<br>
+                <div class="col-md-6">
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">{{ 'shared_project_timesheets.view.project_budget' | trans }}</h3>
+                        </div>
+                        <div class="box-body">
+                            <b>{{ 'shared_project_timesheets.view.project_total_budget' | trans }}</b>: {{ project.budget | format_currency(currency) }}<br>
+                            <b>{{ 'shared_project_timesheets.view.project_used_budget' | trans }}</b>: {{ rateSum | format_currency(currency) }}<br>
+                            <b>{{ 'shared_project_timesheets.view.project_open_budget' | trans }}</b>: {{ openBudget | format_currency(currency) }}<br>
+                        </div>
                     </div>
                 </div>
             {% endif %}
+            {% if sharedProject.projectTimeBudgetVisible %}
+                <div class="col-md-6">
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">{{ 'shared_project_timesheets.view.time_budget' | trans }}</h3>
+                        </div>
+                        <div class="box-body">
+                            <b>{{ 'shared_project_timesheets.view.project_total_budget' | trans }}</b>: {{ totalTimeBudget | duration }}<br>
+                            <b>{{ 'shared_project_timesheets.view.project_used_budget' | trans }}</b>: {{ timeDurationSum | duration }}<br>
+                            <b>{{ 'shared_project_timesheets.view.project_open_budget' | trans }}</b>: {% if timeDurationSum > totalTimeBudget %} {{ '-' }} {% endif %} {{ openTimeBudget | duration }}<br>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            </div>    
         </div>
         {% if statsPerMonth != null %}
         <div class="col-md-8">
@@ -117,14 +135,14 @@
                 <thead>
                     <tr>
                         <th>{{ 'shared_project_timesheets.view.table.date' | trans }}</th>
-                        <th>{{ 'shared_project_timesheets.view.table.description' | trans }}</th>
-                        {% if sharedProject.entryUserVisible %}
-                        <th>{{ 'shared_project_timesheets.view.table.user' | trans }}</th>
-                        {% endif %}
                         {% if sharedProject.activityVisible %}
                         <th>{{ 'shared_project_timesheets.view.table.activity' | trans }}</th>
                         {% endif %}
+                        <th>{{ 'shared_project_timesheets.view.table.description' | trans }}</th>
                         <th>{{ 'shared_project_timesheets.view.table.duration' | trans }}</th>
+                        {% if sharedProject.entryUserVisible %}
+                        <th>{{ 'shared_project_timesheets.view.table.user' | trans }}</th>
+                        {% endif %}
                         {% if sharedProject.entryRateVisible %}
                         <th>{{ 'shared_project_timesheets.view.table.rate_hour' | trans }}</th>
                         <th>{{ 'shared_project_timesheets.view.table.rate_total' | trans }}</th>
@@ -132,14 +150,14 @@
                     </tr>
                     <tr>
                         <th>{{ 'shared_project_timesheets.view.table.date' | trans }}</th>
-                        <th>{{ 'shared_project_timesheets.view.table.description' | trans }}</th>
-                        {% if sharedProject.entryUserVisible %}
-                        <th>{{ 'shared_project_timesheets.view.table.user' | trans }}</th>
-                        {% endif %}
                         {% if sharedProject.activityVisible %}
                         <th>{{ 'shared_project_timesheets.view.table.activity' | trans }}</th>
                         {% endif %}
+                        <th>{{ 'shared_project_timesheets.view.table.description' | trans }}</th>
                         <th>{{ 'shared_project_timesheets.view.table.duration' | trans }}</th>
+                        {% if sharedProject.entryUserVisible %}
+                        <th>{{ 'shared_project_timesheets.view.table.user' | trans }}</th>
+                        {% endif %}
                         {% if sharedProject.entryRateVisible %}
                         <th>{{ 'shared_project_timesheets.view.table.rate_hour' | trans }}</th>
                         <th>{{ 'shared_project_timesheets.view.table.rate_total' | trans }}</th>
@@ -149,14 +167,14 @@
                 {% for record in timeRecords %}
                     <tr>
                         <td>{{ record.date | date_short }}</td>
-                        <td>{{ record.description | e | nl2br }}</td>
-                        {% if sharedProject.entryUserVisible %}
-                            <td>{{ record.user.displayName }}</td>
-                        {% endif %}
                         {% if sharedProject.activityVisible %}
                             <td>{{ record.activity.name }}</td>
                         {% endif %}
+                        <td>{{ record.description | e | nl2br }}</td>
                         <td>{{ record.duration | duration }}</td>
+                        {% if sharedProject.entryUserVisible %}
+                            <td>{{ record.user.displayName }}</td>
+                        {% endif %}
                         {% if sharedProject.entryRateVisible %}
                             {% if record.differentHourlyRates %}
                                 <td>
@@ -175,14 +193,14 @@
                 <tfoot>
                     <tr>
                         <th></th>
-                        <th></th>
-                        {% if sharedProject.entryUserVisible %}
-                        <th></th>
-                        {% endif %}
                         {% if sharedProject.activityVisible %}
                         <th></th>
                         {% endif %}
+                        <th></th>
                         <th>{{ durationSum | duration }}</th>
+                        {% if sharedProject.entryUserVisible %}
+                        <th></th>
+                        {% endif %}
                         {% if sharedProject.entryRateVisible %}
                         <th></th>
                         <th>{{ rateSum | format_currency(currency) }}</th>

@@ -253,4 +253,28 @@ class ViewService
         return $stats;
     }
 
+    public function getOverallStats(SharedProjectTimesheet $sharedProject): array
+    {
+        $result = $this->timesheetRepository->createQueryBuilder('t')
+            ->select([
+                'SUM(t.duration) as duration',
+                'SUM(t.rate) as rate',
+            ])
+            ->where('t.project = :project')
+            ->setParameters([
+                'project' => $sharedProject->getProject()
+            ])
+            ->getQuery()
+            ->getArrayResult();
+
+
+        $stats = [];
+        foreach ($result as $row) {
+            $stats[(int) $row['day']] = new ChartStat($row);
+        }
+
+        ksort($stats);
+        return $stats;
+    }
+
 }

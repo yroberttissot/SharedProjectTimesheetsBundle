@@ -11,6 +11,7 @@
     'entry_user_visible': {'class': 'hidden-xs hidden-sm text-center'},
     'entry_rate_visible': {'class': 'hidden-xs hidden-sm text-center'},
     'project_budget_visible': {'class': 'hidden-xs hidden-sm text-center'},
+    'project_time_budget_visible': {'class': 'hidden-xs hidden-sm text-center'},
     'activity_visible': {'class': 'hidden-xs hidden-sm text-center'},
     'annual_chart_visible': {'class': 'hidden-xs hidden-sm text-center'},
     'monthly_chart_visible': {'class': 'hidden-xs hidden-sm text-center'},
@@ -76,6 +77,9 @@
             </td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'project_budget_visible') }}">
                 <i class="{{ sharedProject.projectBudgetVisible ? "fa fa-check-circle" : "far fa-circle" }}"></i>
+            </td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'project_time_budget_visible') }}">
+                <i class="{{ sharedProject.projectTimeBudgetVisible ? "fa fa-check-circle" : "far fa-circle" }}"></i>
             </td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'activity_visible') }}">
                 <i class="{{ sharedProject.activityVisible ? "fa fa-check-circle" : "far fa-circle" }}"></i>

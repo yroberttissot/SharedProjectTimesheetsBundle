@@ -99,6 +99,13 @@ class SharedProjectTimesheet
     /**
      * @var boolean
      *
+     * @ORM\Column(name="entry_time_budget_visible", type="boolean", nullable=false)
+     */
+    protected $projectTimeBudgetVisible = false;
+
+    /**
+     * @var boolean
+     *
      * @ORM\Column(name="entry_activity_visible", type="boolean", nullable=false)
      */
     protected $activityVisible = false;
@@ -257,6 +264,25 @@ class SharedProjectTimesheet
     public function setProjectBudgetVisible(bool $projectBudgetVisible): SharedProjectTimesheet
     {
         $this->projectBudgetVisible = $projectBudgetVisible;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isProjectTimeBudgetVisible(): bool
+    {
+        return $this->projectTimeBudgetVisible;
+    }
+
+    /**
+     * @param bool $projectTimeBudgetVisible
+     * @return SharedProjectTimesheet
+     */
+    public function setProjectTimeBudgetVisible(bool $projectTimeBudgetVisible): SharedProjectTimesheet
+    {
+        $this->projectTimeBudgetVisible = $projectTimeBudgetVisible;
 
         return $this;
     }

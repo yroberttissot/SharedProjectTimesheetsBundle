@@ -14,6 +14,8 @@ services:
 
     KimaiPlugin\SharedProjectTimesheetsBundle\Command\InstallCommand:
         arguments: ['%kimai.plugin_dir%']
+    KimaiPlugin\SharedProjectTimesheetsBundle\Command\UninstallCommand:
+        arguments: ['%kimai.plugin_dir%']
 
     KimaiPlugin\SharedProjectTimesheetsBundle\Repository\SharedProjectTimesheetRepository:
         class:     Doctrine\ORM\EntityRepository
